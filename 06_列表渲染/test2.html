@@ -9,10 +9,53 @@
 1. 列表过滤
 2. 列表排序
 -->
-
-<script type="text/javascript" src="../js/vue.js"></script>
+<div id="test">
+<input type="text" v-model="searchNmae">
+<ul>
+  <li v-for="(p, index) in filterPersona" :key="p.id">
+    {{p.id}}---{{p.name}}---{{p.age}}
+  </li>
+</ul>
+<button @click="sortType=2">按年龄升序</button>
+<button @click="sortType=3">按年龄降序</button>
+<button @click="sortType=1">原本顺序</button>
+</div>
+<script type="text/javascript" src="../public/vue.js"></script>
 <script type="text/javascript">
-
+  new Vue({
+    el:'#test',
+    data (){
+      return {
+        searchNmae:'',
+        sortType:1, //2 升序 3 降序 1 原本顺序
+        persons: [
+            {id: 1, name: 'Tom', age: 15},
+            {id: 3, name: 'Jerry', age: 12},
+            {id: 5, name: 'Jack', age: 14},
+            {id: 7, name: 'Bob', age: 13},
+            {id: 2, name: 'Mack', age: 16},
+        ]
+      }
+    },
+    computed: {
+      filterPersona(){
+        const {searchNmae,persons,sortType} = this
+        const arr = persons.filter((p,index)=> p.name.indexOf(searchNmae) !== -1)
+        if(sortType!== 1){
+          arr.sort((p1,p2)=>{
+            if(sortType === 3){
+              console.log(p2.age - p1.age)
+              return p2.age - p1.age //降序 越往下越小
+            }else {
+              return p1.age - p2.age //升序 越往下越大
+            }
+          })
+        }
+        console.log(this.searchNmae)
+        return arr
+      }
+    }
+  })
 </script>
 </body>
 </html>

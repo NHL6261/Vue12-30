@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>03_计算属性和监视</title>
+</head>
+
+<body>
+  <!--
+1. 计算属性
+  在computed属性对象中定义计算属性的方法
+  在页面中使用{{方法名}}来显示计算的结果
+2. 监视属性:
+  通过通过vm对象的$watch()或watch配置来监视指定的属性
+  当属性变化时, 回调函数自动调用, 在函数内部进行计算
+3. 计算属性高级:
+  通过getter/setter实现对属性数据的显示和监视
+  计算属性存在缓存, 多次读取只执行一次getter计算
+-->
+  <div id="demo">
+    姓: <input type="text" placeholder="FirstName" v-model="firstname"><br>
+    名: <input type="text" placeholder="LastName" v-model="lastname"><br>
+    <!-- fullname1是集合,且当做函数用,computed来计算,进行拼接,且是单向的,相当于getter -->
+    姓名1(单向): <input type="text" placeholder="FullName1" v-model="fullname1"><br>
+    姓名2(单向): <input type="text" placeholder="FullName2" v-model="fullname2"><br>
+    姓名3(双向): <input type="text" placeholder="FullName3" v-model="fullname3"><br>
+  </div>
+
+  <script type="text/javascript" src="../public/vue.js"></script>
+  <script type="text/javascript">
+  // 实现简单的单向的数据单向流动,且能自动的将数据实时的展现到页面
+   new Vue({
+     el:'#demo',
+     data:{
+       firstname:'A',
+       lastname:'B'
+     },
+     computed: {
+       fullname1(){
+         return this.firstname + "-" + this.lastname
+       }
+     },
+     
+   })
+  </script>
+</body>
+
+</html>

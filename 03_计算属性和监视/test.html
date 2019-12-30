@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>03_计算属性和监视</title>
 </head>
+
 <body>
-<!--
+  <!--
 1. 计算属性
   在computed属性对象中定义计算属性的方法
   在页面中使用{{方法名}}来显示计算的结果
@@ -16,17 +18,56 @@
   通过getter/setter实现对属性数据的显示和监视
   计算属性存在缓存, 多次读取只执行一次getter计算
 -->
-<div id="demo">
-  姓: <input type="text" placeholder="First Name"><br>
-  名: <input type="text" placeholder="Last Name"><br>
-  姓名1(单向): <input type="text" placeholder="Full Name1"><br>
-  姓名2(单向): <input type="text" placeholder="Full Name2"><br>
-  姓名3(双向): <input type="text" placeholder="Full Name3"><br>
-</div>
+  <div id="demo">
+    姓: <input type="text" placeholder="FirstName" v-model="firstName"><br>
+    名: <input type="text" placeholder="LastName" v-model="lastNmae"><br>
+    姓名1(单向): <input type="text" placeholder="FullName1" v-model="fullName1"><br>
+    姓名2(单向): <input type="text" placeholder="FullName2" v-model="fullname2"><br>
+    姓名3(双向): <input type="text" placeholder="FullName3" v-model="fullname3"><br>
+  </div>
 
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript">
+  <script type="text/javascript" src="../public/vue.js"></script>
+  <script type="text/javascript">
+    // 实现简单的单向的数据单向流动,且能自动的将数据实时的展现到页面
+   const vm =  new Vue({
+      el: '#demo',
+      data: {
+        firstName: 'A',
+        lastNmae: 'B',
+        fullname2: 'A-B'
+      },
+      computed: {
+        fullName1() {
+          console.log('fullName1()', this)
+          return this.firstName + '-' + this.lastNmae
+        },
+        fullname3: {
+          get() {
+            // 返回一个新值
+            return this.firstName + '-' + this.lastNmae
+          },
+          set(value) {
+            // 它是一个函数，为该属性赋值时会自动调用，并且新值会被当做参数传入
+            const names = value.split('-') //返回一个数组
+            console.log(value)
+            this.firstName = names[0]
+            this.lastNmae = names[1]
+          }
+        }
+      },
+      watch: {
+        firstName(value){
+          console.log("---我被调用了---")
+          this.fullname2 = value + '-' + this.lastNmae
+        }
+      },
+    })
 
-</script>
+    // 对fullname2做一个监听
+    vm.$watch('lastNmae',function(value){
+      this.fullname2 = this.firstName + '-' + value
+    })
+  </script>
 </body>
+
 </html>

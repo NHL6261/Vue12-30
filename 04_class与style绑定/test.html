@@ -32,14 +32,36 @@
 
 <div id="demo">
   <h2>1. class绑定: :class='xxx'</h2>
-
+  <!-- 类名不固定 -->
+  <p class="classC" :class="myClass">当类名不固定时</p>
+  <!-- 类名确定,且不知道有没有这个样式 -->
+  <p :class="{classA:testA, classB:testB}">如果没有对象,切不知道有没有这个样式</p>
+  <p :class=['classA','classB']>数组</p>
   <h2>2. style绑定</h2>
+  <p :style="{color:'activeColor',fontSize:fontSize + 'px'}">style样式设置</p>
 
+  <button @click="updata">点击更新</button>
 </div>
 
-<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript" src="../public/vue.js"></script>
 <script type="text/javascript">
-
+  new Vue({
+    el:'#demo',
+    data:{
+      myClass:'classA',
+      testA:true,
+      testB:false
+    },
+    methods: {
+      updata(){
+          this.myClass = 'classB',
+          this.testA = !this.testA,
+          this.testB = !this.testB,
+          this.activeColor = "#98a",
+          this.fontSize = 30
+      }
+    },
+  })
 </script>
 </body>
 </html>

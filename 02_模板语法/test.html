@@ -32,20 +32,30 @@
 
 <div id="app">
   <h2>1. 双大括号表达式</h2>
-  <p>---{{msg}}---</p>
-  <p>--{{msg.toUpperCase()}}--</p>
+  <input type="text" v-model="msg">
+  <p>hello,{{msg}}</p>
+  <p>{{msg.toUpperCase()}}</p>
   <h2>2. 指令一: 强制数据绑定</h2>
-  <a :href="url">study</a>
-  <h2>3. 指令二: 绑定事件监听</h2>
+  <!-- 完整写法:v-bind: 简单写法 :href='url'-->
+  <a v-bind:href="url">跳转</a> 
 
+  <!-- 完整写法: v-on:click="" 简单写法:@click="" -->
+  <h2>3. 指令二: 绑定事件监听</h2>
+  <button v-on:click="test">点我1</button>
+  <button @click="test">点我2</button>
 </div>
 <script>
   new Vue({
-    el:"#app",
+    el:'#app',
     data:{
-      msg:'atguigu',
-      url:"http://www.atguigu.com"
-    }
+      msg:'倪皓林',
+      url:'http:www.baidu.com'
+    },
+    methods: {
+      test(event){
+        alert(event.target.innerText)
+      }
+    },
   })
 </script>
 </body>
