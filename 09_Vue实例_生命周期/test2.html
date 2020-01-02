@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue钩子</title>
+</head>
+<body>
+    <script src="../public/vue.js"></script>
+    <div>
+        <button @click="destroyVM">结束</button>
+        <p v-show="isShow">我显示啦</p>
+        <p ref="content">{{isShow ? '真' : '假'}}</p>
+    </div>
+
+    <script>
+        new Vue({
+            data:{
+                isShow:true,
+            },
+            beforeCreate() {
+                console.log("--开始创建--",this.isShow)
+            },
+            created() {
+                console.log("--创建结束--")
+            },
+            beforeMount() {
+                console.log('--开始挂载之前--')
+            },
+            mounted() {
+                this.intervalId = setInterval(function(){
+                    this.isShow = !this.isShow
+                }.bind(this),1000)
+                console.log('--开始挂载--')
+            },
+            beforeUpdate() {
+                console.log('--更新之前--')
+            },
+            updated() {
+                console.log('--开始更新--',this.$refs.content.innerHTML)
+            },
+            beforeDestroy() {
+                console.log('--开始死亡--')
+                clearInterval(this.intervalId)
+            },
+            destroyed() {
+                console.log('--死亡--')
+            },
+
+            methods: {
+            destroyVM(){
+             this.$destroy()
+             }
+            },
+        }).$mount('div')
+    </script>
+</body>
+</html>

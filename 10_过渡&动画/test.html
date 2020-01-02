@@ -3,6 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>10_过渡&动画1</title>
+  <style>
+  /* 显示和隐藏的过渡样式 */
+  .xxx-enter-active,.xxx-leave-active {
+    transition: opacity 3s;
+  }
+
+  /* 指定隐藏时的样式 */
+  .xxx-enret,.xxx-leave-to{
+    opacity: 0 ;
+  }
+  
+  
+  </style>
 </head>
 <body>
 <!--
@@ -20,10 +33,20 @@
   xxx-enter: 指定隐藏时的样式
 -->
 
-
-<script type="text/javascript" src="../js/vue.js"></script>
+<div id="demo">
+  <button v-on:click="show = !show">
+    Toggle
+  </button>
+</div>
+<script type="text/javascript" src="../public/vue.js"></script>
 <script type="text/javascript">
 
+new Vue({
+  el:'#demo',
+  data:{
+    show:true
+  }
+})
 </script>
 </body>
 </html>

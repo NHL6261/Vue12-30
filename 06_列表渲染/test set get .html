@@ -30,40 +30,35 @@
   <script type="text/javascript">
     // 实现简单的单向的数据单向流动,且能自动的将数据实时的展现到页面
    const vm =  new Vue({
-      el: '#demo',
-      data: {
-        firstName: 'A',
-        lastNmae: 'B',
-        fullname2: 'A-B'
+      el:'#demo',
+      data:{
+        firstName:'A',
+        lastName:'B',
+        fullname2:'A-B',
       },
       computed: {
-        fullName1() {
-          console.log('fullName1()', this)
-          return this.firstName + '-' + this.lastName
+        fullName1(){
+          return this.firstName + '-' +this.lastName
         },
-        fullname3: {
-          get() {
-            // 返回一个新值
-            return this.firstName + '-' + this.lastName
+
+        fullname3:{
+          get(){
+            return this.firstName + '-' +this.lastName
           },
-          set(value) {
-            // 它是一个函数，为该属性赋值时会自动调用，并且新值会被当做参数传入
-            const names = value.split('-') //返回一个数组
-            console.log(value)
-            this.firstName = names[0]
-            this.lastName = names[1]
+          set(value){
+            const names = value.split('-')
+            this.firstName = names[0],
+            this.lastName  = names[1]
           }
         }
       },
       watch: {
         firstName(value){
-          console.log("---我被调用了---")
-          this.fullname2 = value + '-' + this.lastNmae
+          console.log('被调用了')
+          this.fullname2 = value + '-' +this.lastName
         }
       },
     })
-
-    // 对fullname2做一个监听
     vm.$watch('lastName',function(value){
       this.fullname2 = this.firstName + '-' + value
     })

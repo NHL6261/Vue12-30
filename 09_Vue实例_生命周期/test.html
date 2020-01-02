@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>09_Vue实例_生命周期</title>
 </head>
+
 <body>
-<!--
+  <!--
 1. vue对象的生命周期
   1). 初始化显示
     * beforeCreate()
@@ -23,11 +25,33 @@
   beforeDestory(): 做收尾工作, 如: 清除定时器
 -->
 
-<div>
+  <div>
 
-</div>
+    <button @click="destoryVM">结束</button>
+    <p v-show="isShow">显示</p>
+  </div>
 
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript"></script>
+  <script type="text/javascript" src="../public/vue.js"></script>
+  <script type="text/javascript">
+    new Vue({
+      data: {
+        isShow: true
+      },
+      mounted() {
+        this.intervalId = setInterval(function(){
+            this.isShow = !this.isShow
+        }.bind(this),1000)
+      },
+      beforeDestroy() {
+        clearInterval(this.intervalId)
+      },
+      methods: {
+        destoryVM(){
+          this.$destroy()
+        }
+      },
+    }).$mount("div")
+  </script>
 </body>
+
 </html>
